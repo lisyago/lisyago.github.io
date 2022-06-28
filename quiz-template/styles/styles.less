@@ -1,0 +1,96 @@
+/* Variables */
+@margin: 0.8em;
+@background-color_main: #2c2c2c;
+@background-color_row: lighten(@background-color_main, 5%);
+@color1: #fbf2cf;
+@color2: @background-color_main;
+@family: courier, 'courier new', serif;
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: @background-color_main;
+    color: @color1;;
+    font-size: 14px;
+    font-family:@family;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5em;
+}
+
+h1 {
+    margin: @margin 0.5em;
+    //font-size: 1.5em;
+}
+
+.main-container {
+    .tested {color: blue;}
+
+    ul {
+        list-style-type: none;
+        position: relative;
+        z-index: 2;
+
+        li {
+            padding: 15px;
+            background-color: @background-color_row;
+
+            &:nth-child(2n) { background-color:lighten( @background-color_row, 10% );}
+
+            h2 {
+                position: relative;
+                margin-bottom: @margin;
+                font-size: 21px;
+                font-weight: normal;
+                color: tomato;
+
+                .btn_collapse,
+                .btn_expand {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    cursor: pointer;
+                    color: @color1;
+                }
+            }
+
+            h3 {
+                margin-bottom: @margin;
+                //font-size: 1.1em;
+            }
+            p.problem-text {
+                display: none;
+                margin: @margin 0;
+                line-height: 1.5em;
+
+                .center {
+                    text-align: center;
+                }
+            }
+            button.btn_answer {
+                display: none;
+                margin: @margin 0;
+                border: 0;
+                padding: 5px 10px;
+                background-color: @color1;
+                color: @color2;
+                cursor: pointer;
+                font-family: @family;
+                font-weight: bolder;
+            }
+
+            .problem-solution {
+                display: none;
+                background-color: @color1;
+                color: @color2;
+                padding: @margin;
+                line-height: 1.5em;
+                //font-size: 1em;
+            }
+        }
+    }
+}
