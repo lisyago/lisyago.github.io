@@ -1,0 +1,97 @@
+
+@color1: rgb(247, 247, 185);
+@color2: rgb(168, 47, 148);
+@color3: rgb(13, 13, 32);
+@color4: rgb(67, 22, 85);
+
+@keyframes change_opacity {
+  from {opacity: 1}
+  to {opacity: 0.2;}
+}
+
+@keyframes change_color {
+  from {background-color: @color1; border-color: @color1;}
+  to {background-color: @color2;  border-color: @color2;}
+}
+
+@-moz-keyframes rotation {
+  100% { -moz-transform: rotate(360deg); } 
+}
+@-webkit-keyframes rotation { 
+  100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes rotation { 
+  100% { 
+      transform:rotate(360deg); 
+  } 
+}
+html {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(@color3, @color4) no-repeat;
+  background-color: @color3;
+}
+
+.star {
+  display: block;
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  box-shadow: 0 0 3px @color1, 0 0 5px @color3;
+  background-color: @color1;
+  border: solid 1px  @color1;
+  border-radius: 1px;
+  margin: 5px;
+}
+
+.change_opacity {
+  animation-name: change_opacity;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  box-shadow: 0 0 6px @color1;
+  border-width: 2px;
+  border-radius: 2px;
+
+}
+
+.change_color {
+  animation-name: change_color;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+
+}
+
+.btn_reload {
+  position: relative;
+  z-index: 100;
+  @size: 70px;
+  width: @size;
+  height: @size;
+  border-radius: @size*0.5;
+  border: 0 inset;
+  margin: 60px;
+  background-color: @color1;
+  color: @color3;
+  font-size: @size*0.5;
+  -moz-box-shadow: 0 0 10px @color1, 0 0 10px @color3;
+  -webkit-box-shadow: 0 0 10px @color1, 0 0 10px @color3;
+  box-shadow: 0 0 10px @color1, 0 0 10px @color3;
+  cursor: pointer;
+
+  &:active {
+    box-shadow: inset 0 0 5px @color3;
+  }
+
+  &:hover {
+    animation-name: rotation;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+  }
+}
+
