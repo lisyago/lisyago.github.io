@@ -8,15 +8,14 @@
 
 @desktop-min-w: 992px;
 
-@tablet-min-w: 768px;
-@tablet-max-w: @desktop-min-w - 1; //991px
-
-@smart-max-w: @tablet-min-w - 1; //767px
-@smart-min-w: 540px;
-
-@mobile-max-w: @smart-min-w - 1; //539px
-
 @width: 980px;
+
+@desktop:   ~"only screen and (min-width: 992px)";
+@tablet:    ~"only screen and (min-width: 768px) and (max-width: 991px)";
+@smart:     ~"only screen and (min-width: 540px) and (max-width: 767px)";
+@mobile:    ~"only screen and (max-width: 539px)";
+
+@current-weather-icon-height: 128px;
 
 /*-------------------------------------------------------------------*/
 /* Mixins */
@@ -159,6 +158,9 @@ div {
 }
 
 &.weather-display {
+  @media @smart, @mobile, @tablet {
+    align-items: inherit;
+  }
   .logo {
     display: none;
   }
@@ -167,9 +169,10 @@ div {
 .main-container {
 
   text-align: center;
+  min-width: 100%;
 
-  @media (min-width: @desktop-min-w) {
-    //desktop
+  @media @desktop {
+    min-width: auto;
     max-width: @width;
   }
 
@@ -179,9 +182,18 @@ div {
 
   .header {
     .flex;
-
+    
+    @media @smart, @mobile {
+        flex-wrap:wrap;
+        justify-content:left;
+      }
     form {
       white-space: nowrap;
+
+      @media @smart, @mobile {
+        flex: 0 0 100%;
+        margin-bottom: @gap;
+      }
 
       label {
         display: none;
@@ -202,7 +214,6 @@ div {
           background-color: white !important;
           opacity: 1 !important;
           background: rgba(255, 255, 255, 1);
-          /* newer browsers */
           font-family: 'Ubuntu', sans-serif;
           font-weight: 400;
         }
@@ -226,18 +237,36 @@ div {
       font-size: 21px;
       font-weight: 500;
       max-width: 400px;
+
+      @media @smart {
+        text-align: right;
+      }
+      @media @mobile {
+        text-align: center;
+      }
     }
 
     .current-weather {
-      width: 128px;
-      height: 128px;
+      width: @current-weather-icon-height + 40;
+      height: @current-weather-icon-height;
+      line-height: @current-weather-icon-height;
+      white-space: nowrap;
       .weather-icon;
+      background-position: 0 50%;
+      background-size: auto;
+      text-align: right;
+
+      @media @smart, @mobile { 
+        background-size: 60%;
+        width: @current-weather-icon-height;
+        height: @current-weather-icon-height*0.7;
+        line-height: @current-weather-icon-height*0.7;
+      }
     }
   }
 
   .content {
     .flex;
-    justify-content: center;
 
     .data-grid {
       @gap2: 10px;
@@ -268,6 +297,7 @@ div {
         background-size: 19%;
         background-position-x: 90%;
         padding-right: 50px;
+        text-align: left;
       }
 
       .tempmin {
@@ -293,6 +323,18 @@ div {
 
       .wind {
         grid-column: 5;
+      }
+
+
+      @media @smart, @mobile {
+        grid-template-columns: 2fr repeat(2, 1fr) 1fr;
+
+        .conditions {
+          display: none;
+        }
+        .wind {
+          grid-column: 4;
+        }
       }
     }
   }
