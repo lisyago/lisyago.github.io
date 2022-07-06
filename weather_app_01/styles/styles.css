@@ -209,16 +209,19 @@ div.freezing-fog {
   }
 }
 .main-container .header .current-weather {
+  background-position: 50% 50%;
+  background-size: 100%;
+  background-repeat: no-repeat;
   width: 168px;
   height: 128px;
   line-height: 128px;
   white-space: nowrap;
-  background-position: 50% 50%;
-  background-size: 100%;
-  background-repeat: no-repeat;
   background-position: 0 50%;
   background-size: auto;
   text-align: right;
+}
+.main-container .header .current-weather::after {
+  content: ' \2103';
 }
 @media only screen and (min-width: 540px) and (max-width: 767px), only screen and (max-width: 539px) {
   .main-container .header .current-weather {
@@ -262,18 +265,52 @@ div.freezing-fog {
   padding-right: 50px;
   text-align: left;
 }
+.main-container .content .data-grid .tempmin::after,
+.main-container .content .data-grid .tempmax::after {
+  content: ' \2103';
+}
+.main-container .content .data-grid .tempmin .label,
+.main-container .content .data-grid .tempmax .label {
+  display: none;
+}
+.main-container .content .data-grid .tempmin.extremally_cold,
+.main-container .content .data-grid .tempmax.extremally_cold {
+  color: #27004b;
+}
+.main-container .content .data-grid .tempmin.very_cold,
+.main-container .content .data-grid .tempmax.very_cold {
+  color: #0a027e;
+}
+.main-container .content .data-grid .tempmin.cold,
+.main-container .content .data-grid .tempmax.cold {
+  color: #1b193a;
+}
+.main-container .content .data-grid .tempmin.normal,
+.main-container .content .data-grid .tempmax.normal {
+  color: inherit;
+}
+.main-container .content .data-grid .tempmin.warm,
+.main-container .content .data-grid .tempmax.warm {
+  color: #037419;
+}
+.main-container .content .data-grid .tempmin.hot,
+.main-container .content .data-grid .tempmax.hot {
+  color: #9e6003;
+}
+.main-container .content .data-grid .tempmin.very_hot,
+.main-container .content .data-grid .tempmax.very_hot {
+  color: #bb2703;
+}
+.main-container .content .data-grid .tempmin.extremally_hot,
+.main-container .content .data-grid .tempmax.extremally_hot {
+  color: #700202;
+}
 .main-container .content .data-grid .tempmin {
   grid-column: 3;
   font-size: smaller;
 }
-.main-container .content .data-grid .tempmin .label {
-  display: none;
-}
 .main-container .content .data-grid .tempmax {
   grid-column: 2;
-}
-.main-container .content .data-grid .tempmax .label {
-  display: none;
 }
 .main-container .content .data-grid .conditions {
   grid-column: 4;

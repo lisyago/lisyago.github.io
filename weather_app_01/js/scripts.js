@@ -57,32 +57,64 @@ function getWeatherData(my_location){
 
         showLocation(location);
 
+        
+        let setTempType = (temp) => {
+            switch (true){
+                case (temp < -25) : className = 'extremally_cold';
+                break;
+                case (temp >= -25 && temp < -10) : return 'very cold';
+                break;
+                case (temp >= -10 && temp < 0) : return'cold';
+                break;
+                case (temp >= 0 && temp < 15) : return 'normal';
+                break;
+                case (temp >= 15 && temp < 25 ): return 'warm';
+                break;
+                case (temp >= 25 && temp < 30 ): return 'hot';
+                break;
+                case (temp >= 30 && temp < 35 ): return'very_hot';
+                break;
+                case (temp >= 35 ): return 'extremally_hot';
+                break;
+            }
+            return className;
+        }
+
+        let setWindType = (wind) => {
+            switch (true){
+                case (wind < 20) : return 'slow';
+                case (wind >= 20 && wind < 38) : return 'fresh';
+                case (wind >= 39 && wind < 75) : return 'strong';
+                case (wind >= 75 && wind < 103) : return 'storm';
+                case (wind >= 103 && wind < 118) : return 'strong_storm';
+                case (wind >= 118) : return 'hurricane';
+            }
+        }
+
         let showWeather = () => {
             let classNameFromCondtions = (str) => {
                 return (str + "").toLowerCase().replace(", ", ",").replace(" ", "-").replace(",", " ").replace("/", "-");
             }
-            let tempmin,
-                tempmax,
-                currentWeatherType = currentConditions.conditions,
-                currentWeatherClassName = classNameFromCondtions(currentWeatherType);
+            let currentWeatherClassName = classNameFromCondtions(currentConditions.conditions);
                
             $j('body').addClass('weather-display ' + currentWeatherClassName);
-            header.prepend(`<div class="current-weather ${currentWeatherClassName}">${currentConditions.temp} &#176C</div>`); // add current weather conditions to the header
+            header.prepend(`<div class="current-weather ${currentWeatherClassName}">${currentConditions.temp}</div>`); // add current weather conditions to the header
 
 
             content.append('<div class="data-grid"></div>'); //Create grid with 15 days forecast
             for (let i=0; i<days.length; i++) {
                 let day = (i == 0) ? ('Today') : ((i == 1) ? ('Tomorrow') : days[i].datetime),
-                    tempmin = days[i].tempmin + '&#176C',
-                    tempmax = days[i].tempmax + '&#176C',
-                
-                    forecastWeatherClassName = classNameFromCondtions(days[i].conditions),
-                    date = `<div class="date ${forecastWeatherClassName}">${day}</div>`,
-                    tempMax = `<div class="tempmax"><span class="label">Max:</span> ${tempmax}</div>`,
-                    tempMin = `<div class="tempmin"><span class="label">Min:</span>${tempmin}</div>`,
-                    wind = `<div class="wind">${days[i].windspeed} km/h</div>`,
-                    descr = `<div class="conditions">${days[i].conditions}</div>`;
 
+                    tempmin = days[i].tempmin,
+                    tempmax = days[i].tempmax,
+
+                    forecastWeatherClassName = classNameFromCondtions(days[i].conditions),
+
+                    date = `<div class="date ${forecastWeatherClassName}">${day}</div>`,
+                    tempMax = `<div class="tempmax ${setTempType(tempmax)}"><span class="label">Max:</span> ${tempmax}</div>`,
+                    tempMin = `<div class="tempmin"><span class="label">Min:</span>${tempmin}</div>`,
+                    wind = `<div class="wind ${setWindType(days[i].windspeed)}">${days[i].windspeed} km/h</div>`,
+                    descr = `<div class="conditions">${days[i].conditions}</div>`;
                 $j('.data-grid').append( date + tempMax + tempMin + descr + wind );
             }
         }

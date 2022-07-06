@@ -31,6 +31,12 @@
   background-repeat: no-repeat;
 }
 
+.celsius() { //Degree symbol
+  &::after {
+    content: ' \2103';
+  }
+}
+
 /*-------------------------------------------------------------------*/
 * {
   margin: 0;
@@ -247,11 +253,12 @@ div {
     }
 
     .current-weather {
+      .weather-icon;
+      .celsius;
       width: @current-weather-icon-height + 40;
       height: @current-weather-icon-height;
       line-height: @current-weather-icon-height;
       white-space: nowrap;
-      .weather-icon;
       background-position: 0 50%;
       background-size: auto;
       text-align: right;
@@ -300,21 +307,47 @@ div {
         text-align: left;
       }
 
-      .tempmin {
-        grid-column: 3;
-        font-size: smaller;
+      .tempmin,
+      .tempmax {
+        .celsius;
 
         .label {
           display: none;
         }
+
+        &.extremally_cold {
+          color: rgb(39, 0, 75);
+        }
+        &.very_cold {
+          color: rgb(10, 2, 126);
+        }
+        &.cold {
+          color: rgb(27, 25, 58)
+        }
+        &.normal {
+          color: inherit;
+        }
+        &.warm {
+          color: #037419;
+        }
+        &.hot {
+          color: #9e6003;
+        }
+        &.very_hot {
+          color: #bb2703;
+        }
+        &.extremally_hot {
+          color: #700202;
+        }
+      }
+
+      .tempmin {
+        grid-column: 3;
+        font-size: smaller;
       }
 
       .tempmax {
         grid-column: 2;
-
-        .label {
-          display: none;
-        }
       }
 
       .conditions {
